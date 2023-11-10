@@ -1,21 +1,17 @@
 #include <iostream>
 using namespace std;
 
-
-int max (int x, int y)
+int sum(int x, int y, int z = 0, int w = 0)
 {
-  if (x > y)
-    return x;
-  else
-    return y;
+  return (x+ y +z +w);
 }
 
 int main()
 {
-  int a = 30, b = 20;
+  cout << sum(10,15) << endl;
 
-  int m = max(a,b);
+  cout << sum (10,15,25) << endl;
 
-  cout << " m is " << m << endl;
+  cout << sum(10,15,25,30) << endl;
   return 0;
 }
