@@ -188,3 +188,61 @@ git commit -m "testing"
 git push -u origin master
 git push -u origin master
 git push -u origin master
+emacs cw.cpp
+git init
+cd https://github.com/FabianG123/CST2550
+git add cw.cpp
+git commit -m "first try"
+git add cw.cpp
+git add .
+git status
+git commit -m "testing"
+git push origin master
+git commit -m "trying to push"
+git pull origin master
+git push origin master
+$ git push origin master
+Username for 'https://github.com':
+Password for 'https://FabianG123@github.com':
+To https://github.com/FabianG123/CST2550.git
+ ! [rejected]        master -> master (fetch first)
+error: failed to push some refs to 'https://github.com/FabianG123/CST2550.git'
+hint: Updates were rejected because the remote contains work that you do
+hint: not have locally. This is usually caused by another repository pushing
+hint: to the same ref. You may want to first integrate the remote changes
+hint: (e.g., 'git pull ...') before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+Fabian@DESKTOP-I7MTB2L ~
+$
+git merge origin/master
+git merge --allow-unrelated-histories origin/master
+git commit -m "Merge remote-tracking branch 'origin/master'"
+git commit -m "Merge remote-tracking branch 'origin/master'"
+emacs a.exe
+git add a.exe
+git commit -m "Merge remote-tracking branch 'origin/master'"
+git push origin master
+git remote set-url origin https://FabianG123:YOUR_PERSONAL_ACCESS_TOKEN@github.com/FabianG123/CST2550.git
+git push origin master
+git push origin master
+git remote set-url origin https://FabianG123:YOUR_PERSONAL_ACCESS_TOKEN@github.com/FabianG123/CST2550.git
+git push origin master
+clear
+clear
+clear
+clear
+clear
+clear
+clear
+clear
+clear
+clear
+clear
+clear
+clear
+clear
+clear
+emacs cw.cpp
+git init
+git add cw.cpp
+git commit -m "trying to push into github"
