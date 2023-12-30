@@ -246,3 +246,23 @@ emacs cw.cpp
 git init
 git add cw.cpp
 git commit -m "trying to push into github"
+emacs cw.cpp
+git init
+git add cw.cpp
+git add .
+git commit -m "trying to commit"
+git remote add origin https://github.com/FabianG123/CST2550.git
+git push -u origin master
+emacs cw.cpp
+git config --global user.name "Fabian
+
+
+clear
+git commit -m "trying to commit"
+sd
+asd
+dz
+x
+wq
+asds
+s
