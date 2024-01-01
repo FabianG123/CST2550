@@ -266,3 +266,13 @@ x
 wq
 asds
 s
+git init
+git config --global user.name "Fabian"
+git config --global user.email "galaselfabian@gmail.com"
+cd https://github.com/FabianG123/CST2550
+git add .
+git commit -m "trying to commit"
+git remote add origin https://github.com/FabianG123/CST2550
+git branch -M main
+git push -u origin main
+ssh-keygen -t rsa -b 4096 -C "galaselfabian@gmail.com"
