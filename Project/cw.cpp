@@ -1,19 +1,6 @@
 #include <iostream>
 #include <string>
 
-class Date {
-public:
-    int day;
-    int month;
-    int year;
-
-    // Constructor
-    Date(int _day, int _month, int _year)
-        : day(_day), month(_month), year(_year) {
-        // Additional initialization if needed
-    }
-};
-
 class Person {
 private:
     std::string name;
@@ -58,12 +45,12 @@ public:
     std::string name;
     std::string address;
     std::string email;
-    int memberID;  // Assuming this attribute for demonstrating methods, adjust as needed
+    int memberID;  // 
 
     // Constructor
     Librarian(int _staffID, const std::string& _name, const std::string& _address, const std::string& _email, int _salary)
         : staffID(_staffID), name(_name), address(_address), email(_email), salary(_salary) {
-        // Additional initialization if needed
+        
     }
 
     // Member functions
@@ -80,7 +67,7 @@ public:
 
     void returnBook(int _memberID, int bookID) {
         // Implementation to return a book from an individual member
-        memberID = 0;  // Assuming 0 as an indicator of no borrowed book
+        memberID = 0; 
         std::cout << "Book returned by member." << std::endl;
     }
 
@@ -122,12 +109,12 @@ public:
     std::string name;
     std::string address;
     std::string email;
-    int bookID;  // Assuming this attribute for demonstrating methods, adjust as needed
+    int bookID; 
 
     // Constructor
     Member(int _memberID, const std::string& _name, const std::string& _address, const std::string& _email)
         : memberID(_memberID), name(_name), address(_address), email(_email) {
-        // Additional initialization if needed
+        
     }
 
     // Member functions
@@ -149,13 +136,12 @@ private:
     std::string authorFirstName;
     std::string authorLastName;
     std::string bookType;
-    Date dueDate;
-    Member* borrower;
+    // Remove Date and borrower attributes
 
 public:
     // Constructor
     Book(int _bookID, const std::string& _bookName, const std::string& _authorFirstName, const std::string& _authorLastName)
-        : bookID(_bookID), bookName(_bookName), authorFirstName(_authorFirstName), authorLastName(_authorLastName), borrower(nullptr) {
+        : bookID(_bookID), bookName(_bookName), authorFirstName(_authorFirstName), authorLastName(_authorLastName) {
         // Additional initialization if needed
     }
 
@@ -176,30 +162,18 @@ public:
         return authorLastName;
     }
 
-    Date getDueDate() const {
-        return dueDate;
-    }
-
-    // Setter methods
-    void setDueDate(const Date& _dueDate) {
-        dueDate = _dueDate;
-    }
-
     // Member functions
     void returnBook() {
-        borrower = nullptr;
+        // Implementation to return a book
         std::cout << "Book returned." << std::endl;
     }
 
-    void borrowBook(Member* _borrower, const Date& _dueDate) {
-        borrower = _borrower;
-        dueDate = _dueDate;
-        std::cout << "Book borrowed by " << borrower->name << "." << std::endl;
+    void borrowBook(Member* _borrower) {
+        // Implementation to borrow a book by a member
+        std::cout << "Book borrowed by " << _borrower->name << "." << std::endl;
     }
 };
 
 int main() { 
-  //Main code, usage of the classes
+  // Main code, usage of the classes
 }
-
-
