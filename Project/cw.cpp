@@ -53,32 +53,63 @@ public:
         
     }
 
-    // Member functions
-    void addMember() {
+// Member functions
+    void addMember(Member& member) {
         // Implementation to add a member
-        std::cout << "Member added." << std::endl;
+        std::cout << "Enter member details:\n";
+        std::cout << "Name: ";
+        std::cin >> member.name;
+        std::cout << "Address: ";
+        std::cin >> member.address;
+        std::cout << "Email: ";
+        std::cin >> member.email;
+        std::cout << "Member added:\n";
+        displayMemberDetails(member);
     }
 
-    void issueBook(int _memberID, int bookID) {
+    void issueBook(Member& member, int bookID) {
         // Implementation to issue a book to an individual member
-        memberID = _memberID;
-        std::cout << "Book issued to member." << std::endl;
+        // Set due date (3 days from the date of issue)
+        // Assume today's date as the issue date
+        // For simplicity, due date is set to 3 days later
+        std::cout << "Book issued to member. Due date: 3 days from today.\n";
+        // Set the book as borrowed by the member
+        member.setBooksBorrowed(bookID);
     }
 
-    void returnBook(int _memberID, int bookID) {
+    void returnBook(Member& member, int bookID) {
         // Implementation to return a book from an individual member
-        memberID = 0; 
-        std::cout << "Book returned by member." << std::endl;
+        // Assume today's date as the return date
+        // For simplicity, fine calculation is not implemented here
+        member.setBooksBorrowed(0);
+        std::cout << "Book returned by member.\n";
     }
 
-    void displayBorrowedBooks(int _memberID) {
+    void displayBorrowedBooks(const Member& member) {
         // Implementation to display all books borrowed by an individual member
-        std::cout << "Displaying books borrowed by member." << std::endl;
+        std::cout << "Displaying books borrowed by member:\n";
+        if (member.bookID != 0) {
+            // Assuming book details can be retrieved by bookID
+            std::cout << "Book ID: " << member.bookID << "\n";
+            // Display other book details as needed
+        } else {
+            std::cout << "No books borrowed by the member.\n";
+        }
     }
 
-    void calcFine(int _memberID) {
+    void calcFine(const Member& member) {
         // Implementation to calculate a fine for an individual member
-        std::cout << "Fine calculated for member." << std::endl;
+        // For simplicity, fine calculation is not implemented here
+        std::cout << "Fine calculated for member.\n";
+    }
+
+    // Helper function to display member details
+    void displayMemberDetails(const Member& member) const {
+        std::cout << "Member ID: " << member.getMemberID() << "\n";
+        std::cout << "Name: " << member.name << "\n";
+        std::cout << "Address: " << member.address << "\n";
+        std::cout << "Email: " << member.email << "\n";
+        std::cout << "-------------------------\n";
     }
 
     // Getter and Setter for staffID
@@ -117,7 +148,7 @@ public:
         
     }
 
-    // Member functions
+   // Member functions
     int getMemberID() const {
         return memberID;
     }
@@ -125,7 +156,7 @@ public:
     void setBooksBorrowed(int _bookID) {
         // Implementation to set books borrowed by a member
         bookID = _bookID;
-        std::cout << "Book borrowed by member." << std::endl;
+        std::cout << "Book borrowed by member.\n";
     }
 };
 
