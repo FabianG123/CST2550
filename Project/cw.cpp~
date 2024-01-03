@@ -1,142 +1,179 @@
 #include <iostream>
 #include <string>
 
-struct Book {
-    int id;
-    std::string name;
-    std::string author;
-    std::string type;
-    int page_count;
-    bool is_borrowed;
-    time_t due_date;
-};
-
-struct Member {
-    int id;
-    std::string name;
-    Book borrowed_books[10]; // Assuming a member can borrow up to 10 books
-    int num_borrowed_books;
-};
-
-class Library {
+class Person {
 private:
-    Member members[100]; // Assuming up to 100 members
-    Book books[100];     // Assuming up to 100 books
-    int numMembers;
-    int numBooks;
-
-    time_t getCurrentTime() {
-        return time(0); // Remove the std:: prefix
-    }
+    std::string name;
+    std::string address;
+    std::string email;
 
 public:
-    Library() : numMembers(0), numBooks(0) {}
-
-    void addMember(const std::string& name) {
-        members[numMembers].id = numMembers + 1;
-        members[numMembers].name = name;
-        members[numMembers].num_borrowed_books = 0;
-        numMembers++;
-
-        std::cout << "Member added successfully. Member ID: " << members[numMembers - 1].id << "\n";
+    // Getter methods
+    std::string getName() const {
+        return name;
     }
 
-    void displayAllBooks() {
-        std::cout << "Available Books:\n";
-        for (int i = 0; i < numBooks; ++i) {
-            if (!books[i].is_borrowed) {
-                std::cout << "ID: " << books[i].id << " | Name: " << books[i].name << " | Author: " << books[i].author << "\n";
-            }
-        }
+    std::string getAddress() const {
+        return address;
     }
 
-    void issueBook(int memberId, int bookId) {
-        for (int i = 0; i < numMembers; ++i) {
-            if (members[i].id == memberId) {
-                for (int j = 0; j < numBooks; ++j) {
-                    if (books[j].id == bookId && !books[j].is_borrowed) {
-                        books[j].is_borrowed = true;
-                        books[j].due_date = getCurrentTime() + 3 * 24 * 60 * 60; // 3 days in seconds
-                        members[i].borrowed_books[members[i].num_borrowed_books++] = books[j];
-
-                        std::cout << "Book issued successfully. Due date: " << asctime(localtime(&books[j].due_date)); // Remove the std:: prefix
-                        return;
-                    }
-                }
-                std::cout << "Book not found or already borrowed.\n";
-                return;
-            }
-        }
-        std::cout << "Member not found.\n";
+    std::string getEmail() const {
+        return email;
     }
 
-    void returnBook(int memberId, int bookId) {
-        for (int i = 0; i < numMembers; ++i) {
-            if (members[i].id == memberId) {
-                for (int j = 0; j < members[i].num_borrowed_books; ++j) {
-                    if (members[i].borrowed_books[j].id == bookId) {
-                        members[i].borrowed_books[j].is_borrowed = false;
-
-                        time_t currentTime = getCurrentTime();
-                        if (members[i].borrowed_books[j].due_date < currentTime) {
-                            int daysOverdue = (currentTime - members[i].borrowed_books[j].due_date) / (24 * 60 * 60);
-                            int fine = daysOverdue * 1; // £1 per day overdue
-                            std::cout << "Book returned successfully. Overdue fine: £" << fine << "\n";
-                        } else {
-                            std::cout << "Book returned successfully.\n";
-                        }
-
-                        // Remove the book from the member's borrowed_books array
-                        for (int k = j; k < members[i].num_borrowed_books - 1; ++k) {
-                            members[i].borrowed_books[k] = members[i].borrowed_books[k + 1];
-                        }
-                        members[i].num_borrowed_books--;
-
-                        return;
-                    }
-                }
-                std::cout << "Book not found or not borrowed by this member.\n";
-                return;
-            }
-        }
-        std::cout << "Member not found.\n";
+    // Setter methods
+    void setName(const std::string& _name) {
+        name = _name;
     }
 
-    void displayBooksBorrowedByMember(int memberId) {
-        for (int i = 0; i < numMembers; ++i) {
-            if (members[i].id == memberId) {
-                if (members[i].num_borrowed_books == 0) {
-                    std::cout << "No books borrowed by this member.\n";
-                } else {
-                    std::cout << "Books borrowed by Member ID " << memberId << ":\n";
-                    for (int j = 0; j < members[i].num_borrowed_books; ++j) {
-                        std::cout << "ID: " << members[i].borrowed_books[j].id << " | Name: " << members[i].borrowed_books[j].name << " | Due Date: " << asctime(localtime(&members[i].borrowed_books[j].due_date)); // Remove the std:: prefix
-                    }
-                }
-                return;
-            }
-        }
-        std::cout << "Member not found.\n";
+    void setAddress(const std::string& _address) {
+        address = _address;
+    }
+
+    void setEmail(const std::string& _email) {
+        email = _email;
     }
 };
 
-int main() {
-    Library library;
+class Librarian {
+private:
+    int staffID;
+    int salary;
 
-    // Sample usage
-    library.addMember("John Doe");
+public:
+    // Additional attributes
+    std::string name;
+    std::string address;
+    std::string email;
+    int memberID;  // 
 
-    library.books[library.numBooks++] = {1, "The Hitchhiker's Guide to the Galaxy", "Douglas Adams", "Science Fiction", 224, false, 0};
-    library.books[library.numBooks++] = {2, "1984", "George Orwell", "Satire", 328, false, 0};
-    // Add more books...
+    // Constructor
+    Librarian(int _staffID, const std::string& _name, const std::string& _address, const std::string& _email, int _salary)
+        : staffID(_staffID), name(_name), address(_address), email(_email), salary(_salary) {
+        
+    }
 
-    library.displayAllBooks();
+    // Member functions
+    void addMember() {
+        // Implementation to add a member
+        std::cout << "Member added." << std::endl;
+    }
 
-    library.issueBook(1, 1);
+    void issueBook(int _memberID, int bookID) {
+        // Implementation to issue a book to an individual member
+        memberID = _memberID;
+        std::cout << "Book issued to member." << std::endl;
+    }
 
-    library.displayBooksBorrowedByMember(1);
+    void returnBook(int _memberID, int bookID) {
+        // Implementation to return a book from an individual member
+        memberID = 0; 
+        std::cout << "Book returned by member." << std::endl;
+    }
 
-    library.returnBook(1, 1);
+    void displayBorrowedBooks(int _memberID) {
+        // Implementation to display all books borrowed by an individual member
+        std::cout << "Displaying books borrowed by member." << std::endl;
+    }
 
-    return 0;
+    void calcFine(int _memberID) {
+        // Implementation to calculate a fine for an individual member
+        std::cout << "Fine calculated for member." << std::endl;
+    }
+
+    // Getter and Setter for staffID
+    int getStaffID() const {
+        return staffID;
+    }
+
+    void setStaffID(int _staffID) {
+        staffID = _staffID;
+    }
+
+    // Getter and Setter for salary
+    int getSalary() const {
+        return salary;
+    }
+
+    void setSalary(int _salary) {
+        salary = _salary;
+    }
+};
+
+class Member {
+private:
+    int memberID;
+
+public:
+    // Additional attributes
+    std::string name;
+    std::string address;
+    std::string email;
+    int bookID; 
+
+    // Constructor
+    Member(int _memberID, const std::string& _name, const std::string& _address, const std::string& _email)
+        : memberID(_memberID), name(_name), address(_address), email(_email) {
+        
+    }
+
+    // Member functions
+    int getMemberID() const {
+        return memberID;
+    }
+
+    void setBooksBorrowed(int _bookID) {
+        // Implementation to set books borrowed by a member
+        bookID = _bookID;
+        std::cout << "Book borrowed by member." << std::endl;
+    }
+};
+
+class Book {
+private:
+    int bookID;
+    std::string bookName;
+    std::string authorFirstName;
+    std::string authorLastName;
+    std::string bookType;
+    // Remove Date and borrower attributes
+
+public:
+    // Constructor
+    Book(int _bookID, const std::string& _bookName, const std::string& _authorFirstName, const std::string& _authorLastName)
+        : bookID(_bookID), bookName(_bookName), authorFirstName(_authorFirstName), authorLastName(_authorLastName) {
+        // Additional initialization if needed
+    }
+
+    // Getter methods
+    int getBookID() const {
+        return bookID;
+    }
+
+    std::string getBookName() const {
+        return bookName;
+    }
+
+    std::string getAuthorFirstName() const {
+        return authorFirstName;
+    }
+
+    std::string getAuthorLastName() const {
+        return authorLastName;
+    }
+
+    // Member functions
+    void returnBook() {
+        // Implementation to return a book
+        std::cout << "Book returned." << std::endl;
+    }
+
+    void borrowBook(Member* _borrower) {
+        // Implementation to borrow a book by a member
+        std::cout << "Book borrowed by " << _borrower->name << "." << std::endl;
+    }
+};
+
+int main() { 
+  // Main code, usage of the classes
 }
