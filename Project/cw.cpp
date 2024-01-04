@@ -143,7 +143,9 @@ void Librarian::issueBook(Member &member, int bookID) {
   // Set due date (3 days from the date of issue)
   // Assume today's date as the issue date
   // For simplicity, due date is set to 3 days later
-  std::cout << "Book issued to member. Due date: 3 days from today.\n";
+  std::cout << "Book issued to " << member.name
+            << ". Due date: 3 days from today.\n";
+
   // Set the book as borrowed by the member
   member.setBooksBorrowed(bookID);
 }
@@ -250,6 +252,11 @@ int main() {
           int memberID;
           std::cout << "Enter Member ID: ";
           std::cin >> memberID;
+
+          // Search for the member with the entered ID
+          // (You need to implement a search function for members)
+          // For simplicity, assuming the member is found in the existing array.
+          // You should enhance this logic for a real-world scenario.
           if (member.getMemberID() == memberID) {
             int memberChoice;
             do {
