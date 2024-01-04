@@ -62,3 +62,59 @@ cd ..
 git add Project
 git commit -m "Added the folder with the code"
 git push origin master
+git init
+ls
+cd Project
+emacs cw.cpp
+git branch progress-update
+git checkout progress-update
+git add cw.cpp
+git commit -m "Updated code with progress on class"
+git push origin progress-update
+cw.cpp
+emacs cw.cpp
+emacs cw.cpp
+git init
+cd ..
+git init
+git add .
+git commit -m "fixed classes and implemented library books"
+git push origin master
+git pull origin master
+git switch master
+git add .
+git commit -m "fixed classes and implemented library books"
+git push origin master
+git pull origin master
+git push origin master
+cd Project
+ls
+cw.cpp
+emacs cw.cpp
+cd ..
+ls
+cd Project
+ls
+emacs cw.cpp
+ls
+cd ..
+ls
+git add .
+git commit -m "fixed classes and implemented library books"
+git push origin master
+emacs cw.cpp
+rm cw.cpp
+ls
+cd Project
+emacs cw.cpp
+emacs cw.cpp
+cd ..
+git init
+git add .
+git commit -m "Configured the Member and Librarian classes"
+git push origin master
+cd Project
+emacs cw.cpp
+g++ cw.cpp
+emacs cw.cpp
+emacs cw.cpp
