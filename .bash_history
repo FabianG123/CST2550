@@ -118,3 +118,50 @@ emacs cw.cpp
 g++ cw.cpp
 emacs cw.cpp
 emacs cw.cpp
+git init
+ls
+cd Project
+lw
+ls
+emacs cw.cpp
+emacs cw.cpp
+g++ cw.cpp
+ls
+rm a.exe
+ls
+cd ..
+git init
+git add .
+git commit -m "added software menu, with validation. Program doesnt get stuck in an input error loop anymore"
+git push origin mater
+git push origin master
+cd Project
+ls
+emacs cw.cpp
+g++ cw.cpp
+ls
+rm a.exe
+ls
+cd ..
+git init
+git add .
+git commit -m "Re-worked the software menu, and added login for the librarian"
+git push origin master
+emacs cw.cpp
+ls
+cd Project
+ls
+emacs cw.coo
+ls
+emacs cw.cpp
+g++ cw.cpp
+ls
+rm a.exe
+ls
+cd ..
+git init
+git add .
+git commit -m "made the software easier for user to use. It now tells librarian the first name of the member books are assigned to"
+git push origin mater
+git push origin master
+git push origin master
