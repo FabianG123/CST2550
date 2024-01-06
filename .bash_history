@@ -165,3 +165,26 @@ git commit -m "made the software easier for user to use. It now tells librarian 
 git push origin mater
 git push origin master
 git push origin master
+ls
+cd Project
+emacs cw.cpp
+emacs cw.cpp
+g++ cw.cpp
+ls
+rm a.exe
+ls
+cd ..
+git init
+git add .
+git commit -m "software now implements the .csv file, added randomly generated member IDs when a new member is created."
+git push origin master
+cd Project
+ls
+emacs cw.cpp
+emacs cw.cpp
+cd ..
+ls
+git init
+git add .
+git commit -m "Implemented logic to issuing books to members, and made the program more user-friendly. Having trouble reading from .csv file"
+git push origin master

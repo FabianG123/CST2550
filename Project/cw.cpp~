@@ -2,6 +2,7 @@
 #include <iostream>
 #include <random>
 #include <string>
+#include <vector>
 
 class Person {
 private:
@@ -26,11 +27,11 @@ public:
 };
 
 class Member;
-
 class Librarian {
 private:
   int staffID;
   int salary;
+  std::vector<Member> members;
   std::string username; // Added username
   std::string password; // Added password
 
@@ -55,6 +56,15 @@ public:
   void displayBorrowedBooks(const Member &member);
   void calcFine(const Member &member);
   void displayMemberDetails(const Member &member) const;
+
+  // Function to add a member to the vector
+  void addMember(const Member &member) {
+    members.push_back(member);
+    std::cout << "Member added:\n";
+    displayMemberDetails(member);
+  }
+  // Function to find a member by ID in the vector
+  Member *findMemberByID(int memberID);
 
   // Getter and Setter for staffID
   int getStaffID() const { return staffID; }
@@ -152,8 +162,19 @@ void Librarian::addMember(Member &member) {
   std::cin >> member.address;
   std::cout << "Email: ";
   std::cin >> member.email;
+  members.push_back(member);
   std::cout << "Member added:\n";
   displayMemberDetails(member);
+}
+
+Member *Librarian::findMemberByID(int memberID) {
+  // Find the member with the specified ID in the vector
+  for (auto &member : members) {
+    if (member.getMemberID() == memberID) {
+      return &member;
+    }
+  }
+  return nullptr; // Member not found
 }
 
 void Librarian::issueBook(Member &member, int bookID) {
@@ -200,6 +221,17 @@ void Librarian::displayMemberDetails(const Member &member) const {
   std::cout << "Name: " << member.name << "\n";
   std::cout << "Address: " << member.address << "\n";
   std::cout << "Email: " << member.email << "\n";
+
+  // Display books borrowed
+  if (member.bookID != 0) {
+    std::cout << "Books Borrowed:\n";
+    // Assuming book details can be retrieved by bookID
+    std::cout << "Book ID: " << member.bookID << "\n";
+    // Display other book details as needed
+  } else {
+    std::cout << "No books borrowed by the member.\n";
+  }
+
   std::cout << "-------------------------\n";
 }
 
@@ -218,11 +250,12 @@ void Member::displayDetails() const {
 }
 
 // Function to read books from a CSV file
-void readBooksFromCSV(const std::string &filename, Book books[],
-                      int &numBooks) {
+void readBooksFromCSV(const std::string &filename, Book books[], int &numBooks,
+                      const int MAX_BOOKS) {
   std::ifstream file(filename);
   if (file.is_open()) {
-    while (file.good()) {
+    int count = 0; // Variable to count the number of books read
+    while (file.good() && numBooks < MAX_BOOKS && count < 10) {
       int bookID;
       std::string bookName;
       int pageCount;
@@ -240,21 +273,34 @@ void readBooksFromCSV(const std::string &filename, Book books[],
       std::getline(file, authorLastName, ',');
       std::getline(file, bookType, '\n');
 
+      // Debug output
+      std::cout << "Read from file: " << bookID << ", " << bookName << ", "
+                << pageCount << ", " << authorFirstName << ", "
+                << authorLastName << ", " << bookType << std::endl;
+
       // Create Book object and store it in the array
       books[numBooks++] = {bookID,          bookName,       pageCount,
                            authorFirstName, authorLastName, bookType};
+
+      count++;
     }
     file.close();
+    std::cout << "File successfully opened: " << filename << std::endl;
   } else {
     std::cout << "Error opening file: " << filename << std::endl;
   }
 }
+
 int main() {
   const int MAX_BOOKS = 168;
   Book books[MAX_BOOKS];
   int numBooks = 0;
 
-  readBooksFromCSV("./files/books.csv", books, numBooks);
+  std::string filename;
+  std::cout << "Enter the filename: ";
+  std::cin >> filename;
+
+  readBooksFromCSV(filename, books, numBooks, MAX_BOOKS);
 
   Librarian librarian(678, "John Doe", "Library St", "john@example.com", 50000,
                       "librarian", "iLoveLibraries");
@@ -282,8 +328,9 @@ int main() {
       std::cout << "\nLibrary Management System\n";
       std::cout << "1. Add Member\n";
       std::cout << "2. Display Member\n";
-      std::cout << "3. Exit\n";
-      std::cout << "Enter your choice (1-3): ";
+      std::cout << "3. Display Books (First 30)\n"; // New option
+      std::cout << "4. Exit\n";
+      std::cout << "Enter your choice (1-4): ";
 
       if (std::cin >> mainChoice) {
         switch (mainChoice) {
@@ -296,8 +343,8 @@ int main() {
           std::cout << "Enter Member ID: ";
           std::cin >> memberID;
 
-          Member existingMember;
-          if (existingMember.getMemberID() == memberID) {
+          Member *existingMember = librarian.findMemberByID(memberID);
+          if (existingMember != nullptr) {
             int memberChoice;
             do {
               std::cout << "\nMember Menu\n";
@@ -315,12 +362,13 @@ int main() {
                   int bookID;
                   std::cout << "Enter Book ID to issue: ";
                   std::cin >> bookID;
-                  librarian.issueBook(existingMember, bookID);
+                  librarian.issueBook(*existingMember, bookID);
                   break;
 
                 case 2:
-                  if (existingMember.bookID != 0) {
-                    librarian.returnBook(existingMember, existingMember.bookID);
+                  if (existingMember->bookID != 0) {
+                    librarian.returnBook(*existingMember,
+                                         existingMember->bookID);
                   } else {
                     std::cout << "No books to return. Member has not borrowed "
                                  "any books.\n";
@@ -328,15 +376,15 @@ int main() {
                   break;
 
                 case 3:
-                  librarian.displayBorrowedBooks(existingMember);
+                  librarian.displayBorrowedBooks(*existingMember);
                   break;
 
                 case 4:
-                  librarian.calcFine(existingMember);
+                  librarian.calcFine(*existingMember);
                   break;
 
                 case 5:
-                  librarian.displayMemberDetails(existingMember);
+                  librarian.displayMemberDetails(*existingMember);
                   break;
 
                 case 6:
@@ -361,21 +409,61 @@ int main() {
             std::cout << "Member not found.\n";
           }
         } break;
-        case 3:
+        case 3: {
+          int startIdx = 0;
+          do {
+            std::cout << "\nDisplaying Books (First 30)\n";
+            for (int i = startIdx; i < std::min(numBooks, startIdx + 30); ++i) {
+              std::cout << books[i].getBookID() << ". "
+                        << books[i].getBookName() << " by "
+                        << books[i].getAuthorFirstName() << " "
+                        << books[i].getAuthorLastName() << "\n";
+            }
+
+            std::cout << "1. More Pages\n";
+            std::cout << "2. Back\n";
+            std::cout << "Enter your choice (1-2): ";
+
+            int displayChoice;
+            if (std::cin >> displayChoice) {
+              switch (displayChoice) {
+              case 1:
+                startIdx += 30;
+                break;
+
+              case 2:
+                std::cout << "Returning to the main menu.\n";
+                break;
+
+              default:
+                std::cout << "Invalid choice. Please enter 1 or 2.\n";
+              }
+            } else {
+              std::cin.clear();
+              std::cin.ignore(std::numeric_limits<std::streamsize>::max(),
+                              '\n');
+              std::cout << "Invalid input. Please enter a number.\n";
+            }
+
+          } while (startIdx < numBooks);
+        } break;
+
+        case 4:
           std::cout << "Exiting Library Management System. Closing...\n";
           break;
+
         default:
           std::cout
-              << "Invalid choice. Please enter a number between 1 and 3.\n";
+              << "Invalid choice. Please enter a number between 1 and 4.\n";
           break;
         }
       } else {
         std::cin.clear();
         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-        std::cout << "Invalid input. Please enter a number between 1 and 3.\n";
+        std::cout << "Invalid input. Please enter a number between 1 and 4.\n";
       }
     }
-  } while (mainChoice != 3);
+  } while (mainChoice != 4);
 
   return 0;
 }
