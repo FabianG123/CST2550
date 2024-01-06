@@ -1,6 +1,7 @@
 #include <fstream>
 #include <iostream>
 #include <random>
+#include <sstream>
 #include <string>
 #include <vector>
 
@@ -27,6 +28,7 @@ public:
 };
 
 class Member;
+
 class Librarian {
 private:
   int staffID;
@@ -51,18 +53,14 @@ public:
 
   // Member functions
   void addMember(Member &member);
-  void issueBook(Member &member, int bookID);
-  void returnBook(Member &member, int bookID);
-  void displayBorrowedBooks(const Member &member);
-  void calcFine(const Member &member);
-  void displayMemberDetails(const Member &member) const;
+  void issueBook(Member *member, int bookID);
+  void returnBook(Member *member, int bookID);
+  void displayBorrowedBooks(const Member *member);
+  void calcFine(const Member *member);
+  void displayMemberDetails(const Member *member) const;
 
   // Function to add a member to the vector
-  void addMember(const Member &member) {
-    members.push_back(member);
-    std::cout << "Member added:\n";
-    displayMemberDetails(member);
-  }
+  void addMember(const Member &member);
   // Function to find a member by ID in the vector
   Member *findMemberByID(int memberID);
 
@@ -119,7 +117,7 @@ private:
   }
 };
 
-int Member::lastAssignedID = 100; // Set to 100 or any desired starting value
+int Member::lastAssignedID = 100;
 
 class Book {
 private:
@@ -164,7 +162,7 @@ void Librarian::addMember(Member &member) {
   std::cin >> member.email;
   members.push_back(member);
   std::cout << "Member added:\n";
-  displayMemberDetails(member);
+  displayMemberDetails(&member); // Pass the address of the member
 }
 
 Member *Librarian::findMemberByID(int memberID) {
@@ -177,62 +175,72 @@ Member *Librarian::findMemberByID(int memberID) {
   return nullptr; // Member not found
 }
 
-void Librarian::issueBook(Member &member, int bookID) {
+// Implementing member functions of Librarian and Member classes
+void Librarian::issueBook(Member *member, int bookID) {
   // Implementation to issue a book to an individual member
-  // Set due date (3 days from the date of issue)
-  // Assume today's date as the issue date
-  // For simplicity, due date is set to 3 days later
-  std::cout << "Book issued to " << member.name
-            << ". Due date: 3 days from today.\n";
+  if (member != nullptr) {
+    // Set due date (3 days from the date of issue)
+    // Assume today's date as the issue date
+    // For simplicity, due date is set to 3 days later
+    std::cout << "Book issued to " << member->name
+              << ". Due date: 3 days from today.\n";
 
-  // Set the book as borrowed by the member
-  member.setBooksBorrowed(bookID);
-}
-
-void Librarian::returnBook(Member &member, int bookID) {
-  // Implementation to return a book from an individual member
-  // Assume today's date as the return date
-  // For simplicity, fine calculation is not implemented here
-  member.setBooksBorrowed(0);
-  std::cout << "Book returned by member.\n";
-}
-
-void Librarian::displayBorrowedBooks(const Member &member) {
-  // Implementation to display all books borrowed by an individual member
-  std::cout << "Displaying books borrowed by member:\n";
-  if (member.bookID != 0) {
-    // Assuming book details can be retrieved by bookID
-    std::cout << "Book ID: " << member.bookID << "\n";
-    // Display other book details as needed
+    // Set the book as borrowed by the member
+    member->setBooksBorrowed(bookID);
   } else {
-    std::cout << "No books borrowed by the member.\n";
+    std::cout << "Invalid member.\n";
   }
 }
 
-void Librarian::calcFine(const Member &member) {
+void Librarian::returnBook(Member *member, int bookID) {
+  // Implementation to return a book from an individual member
+  if (member != nullptr) {
+    // Assume today's date as the return date
+    // For simplicity, fine calculation is not implemented here
+    member->setBooksBorrowed(0);
+    std::cout << "Book returned by member.\n";
+  } else {
+    std::cout << "Invalid member.\n";
+  }
+}
+
+void Librarian::displayBorrowedBooks(const Member *member) {
+  // Implementation to display all books borrowed by an individual member
+  if (member != nullptr) {
+    std::cout << "Displaying books borrowed by member:\n";
+    if (member->bookID != 0) {
+      // Assuming book details can be retrieved by bookID
+      std::cout << "Book ID: " << member->bookID << "\n";
+      // Display other book details as needed
+    } else {
+      std::cout << "No books borrowed by the member.\n";
+    }
+  } else {
+    std::cout << "Invalid member.\n";
+  }
+}
+
+void Librarian::calcFine(const Member *member) {
   // Implementation to calculate a fine for an individual member
   // For simplicity, fine calculation is not implemented here
-  std::cout << "Fine calculated for member.\n";
+  if (member != nullptr) {
+    std::cout << "Fine calculated for member.\n";
+  } else {
+    std::cout << "Invalid member.\n";
+  }
 }
 
 // Helper function to display member details
-void Librarian::displayMemberDetails(const Member &member) const {
-  std::cout << "Member ID: " << member.getMemberID() << "\n";
-  std::cout << "Name: " << member.name << "\n";
-  std::cout << "Address: " << member.address << "\n";
-  std::cout << "Email: " << member.email << "\n";
-
-  // Display books borrowed
-  if (member.bookID != 0) {
-    std::cout << "Books Borrowed:\n";
-    // Assuming book details can be retrieved by bookID
-    std::cout << "Book ID: " << member.bookID << "\n";
-    // Display other book details as needed
+void Librarian::displayMemberDetails(const Member *member) const {
+  if (member != nullptr) {
+    std::cout << "Member ID: " << member->getMemberID() << "\n";
+    std::cout << "Name: " << member->name << "\n";
+    std::cout << "Address: " << member->address << "\n";
+    std::cout << "Email: " << member->email << "\n";
+    std::cout << "-------------------------\n";
   } else {
-    std::cout << "No books borrowed by the member.\n";
+    std::cout << "Invalid member.\n";
   }
-
-  std::cout << "-------------------------\n";
 }
 
 void Member::setBooksBorrowed(int _bookID) {
@@ -255,7 +263,15 @@ void readBooksFromCSV(const std::string &filename, Book books[], int &numBooks,
   std::ifstream file(filename);
   if (file.is_open()) {
     int count = 0; // Variable to count the number of books read
-    while (file.good() && numBooks < MAX_BOOKS && count < 10) {
+    std::string line;
+
+    // Discard the header line
+    std::getline(file, line);
+
+    while (file.good() && numBooks < MAX_BOOKS && count < 20 &&
+           std::getline(file, line)) {
+      std::stringstream ss(line);
+
       int bookID;
       std::string bookName;
       int pageCount;
@@ -263,15 +279,15 @@ void readBooksFromCSV(const std::string &filename, Book books[], int &numBooks,
       std::string authorLastName;
       std::string bookType;
 
-      // Assuming the CSV format is:
-      // ID,Name,PageCount,AuthorFirstName,AuthorLastName,Type
       char comma; // to read and discard the commas
-      file >> bookID >> comma;
-      std::getline(file, bookName, ',');
-      file >> pageCount >> comma;
-      std::getline(file, authorFirstName, ',');
-      std::getline(file, authorLastName, ',');
-      std::getline(file, bookType, '\n');
+      ss >> bookID >> comma;
+
+      // Use std::getline to read strings with spaces
+      std::getline(ss, bookName, ',');
+      ss >> pageCount >> comma;
+      std::getline(ss, authorFirstName, ',');
+      std::getline(ss, authorLastName, ',');
+      std::getline(ss, bookType, ',');
 
       // Debug output
       std::cout << "Read from file: " << bookID << ", " << bookName << ", "
@@ -301,6 +317,15 @@ int main() {
   std::cin >> filename;
 
   readBooksFromCSV(filename, books, numBooks, MAX_BOOKS);
+
+  // Display the first 20 books
+  std::cout << "\nDisplaying First 20 Books:\n";
+  for (int i = 0; i < std::min(numBooks, 20); ++i) {
+    std::cout << books[i].getBookID() << ". " << books[i].getBookName()
+              << " by " << books[i].getAuthorFirstName() << " "
+              << books[i].getAuthorLastName() << "\n";
+  }
+  std::cout << "-------------------------\n";
 
   Librarian librarian(678, "John Doe", "Library St", "john@example.com", 50000,
                       "librarian", "iLoveLibraries");
@@ -358,33 +383,40 @@ int main() {
 
               if (std::cin >> memberChoice) {
                 switch (memberChoice) {
-                case 1:
-                  int bookID;
+                case 1: {
+                  int bookIDToIssue;
                   std::cout << "Enter Book ID to issue: ";
-                  std::cin >> bookID;
-                  librarian.issueBook(*existingMember, bookID);
-                  break;
+                  std::cin >> bookIDToIssue;
+
+                  librarian.issueBook(existingMember, bookIDToIssue);
+
+                  // Display details after issuing the book
+                  std::cout << "\nMember Details After Issuing the Book:\n";
+                  existingMember->displayDetails();
+                } break;
 
                 case 2:
-                  if (existingMember->bookID != 0) {
-                    librarian.returnBook(*existingMember,
-                                         existingMember->bookID);
-                  } else {
-                    std::cout << "No books to return. Member has not borrowed "
-                                 "any books.\n";
-                  }
+                  int bookIDToReturn;
+                  std::cout << "Enter Book ID to return: ";
+                  std::cin >> bookIDToReturn;
+
+                  librarian.returnBook(existingMember, bookIDToReturn);
+
+                  // Display details after returning the book
+                  std::cout << "\nMember Details After Returning the Book:\n";
+                  existingMember->displayDetails();
                   break;
 
                 case 3:
-                  librarian.displayBorrowedBooks(*existingMember);
+                  librarian.displayBorrowedBooks(existingMember);
                   break;
 
                 case 4:
-                  librarian.calcFine(*existingMember);
+                  librarian.calcFine(existingMember);
                   break;
 
                 case 5:
-                  librarian.displayMemberDetails(*existingMember);
+                  librarian.displayMemberDetails(existingMember);
                   break;
 
                 case 6:
