@@ -268,7 +268,7 @@ void readBooksFromCSV(const std::string &filename, Book books[], int &numBooks,
     // Discard the header line
     std::getline(file, line);
 
-    while (file.good() && numBooks < MAX_BOOKS && count < 20 &&
+    while (file.good() && numBooks < MAX_BOOKS && count < 300 &&
            std::getline(file, line)) {
       std::stringstream ss(line);
 
@@ -308,24 +308,13 @@ void readBooksFromCSV(const std::string &filename, Book books[], int &numBooks,
 }
 
 int main() {
-  const int MAX_BOOKS = 168;
+  const int MAX_BOOKS = 300;
   Book books[MAX_BOOKS];
   int numBooks = 0;
 
   std::string filename;
   std::cout << "Enter the filename: ";
   std::cin >> filename;
-
-  readBooksFromCSV(filename, books, numBooks, MAX_BOOKS);
-
-  // Display the first 20 books
-  std::cout << "\nDisplaying First 20 Books:\n";
-  for (int i = 0; i < std::min(numBooks, 20); ++i) {
-    std::cout << books[i].getBookID() << ". " << books[i].getBookName()
-              << " by " << books[i].getAuthorFirstName() << " "
-              << books[i].getAuthorLastName() << "\n";
-  }
-  std::cout << "-------------------------\n";
 
   Librarian librarian(678, "John Doe", "Library St", "john@example.com", 50000,
                       "librarian", "iLoveLibraries");
@@ -353,7 +342,7 @@ int main() {
       std::cout << "\nLibrary Management System\n";
       std::cout << "1. Add Member\n";
       std::cout << "2. Display Member\n";
-      std::cout << "3. Display Books (First 30)\n"; // New option
+      std::cout << "3. Display Books from: " << filename << "\n";
       std::cout << "4. Exit\n";
       std::cout << "Enter your choice (1-4): ";
 
@@ -442,44 +431,27 @@ int main() {
           }
         } break;
         case 3: {
-          int startIdx = 0;
-          do {
-            std::cout << "\nDisplaying Books (First 30)\n";
-            for (int i = startIdx; i < std::min(numBooks, startIdx + 30); ++i) {
+          // Read books only when the user chooses to display them
+          readBooksFromCSV(filename, books, numBooks, MAX_BOOKS);
+
+          if (numBooks > 0) {
+            std::cout << "-------------------------\n";
+
+            // Display all books
+            std::cout << "\nDisplaying All Books:\n";
+            for (int i = 0; i < numBooks; ++i) {
               std::cout << books[i].getBookID() << ". "
                         << books[i].getBookName() << " by "
                         << books[i].getAuthorFirstName() << " "
                         << books[i].getAuthorLastName() << "\n";
             }
+            std::cout << "-------------------------\n";
+          } else {
+            std::cout << "No books to display.\n";
+          }
 
-            std::cout << "1. More Pages\n";
-            std::cout << "2. Back\n";
-            std::cout << "Enter your choice (1-2): ";
-
-            int displayChoice;
-            if (std::cin >> displayChoice) {
-              switch (displayChoice) {
-              case 1:
-                startIdx += 30;
-                break;
-
-              case 2:
-                std::cout << "Returning to the main menu.\n";
-                break;
-
-              default:
-                std::cout << "Invalid choice. Please enter 1 or 2.\n";
-              }
-            } else {
-              std::cin.clear();
-              std::cin.ignore(std::numeric_limits<std::streamsize>::max(),
-                              '\n');
-              std::cout << "Invalid input. Please enter a number.\n";
-            }
-
-          } while (startIdx < numBooks);
+          std::cout << "\nReturning to the main menu.\n";
         } break;
-
         case 4:
           std::cout << "Exiting Library Management System. Closing...\n";
           break;

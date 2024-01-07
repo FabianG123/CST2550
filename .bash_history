@@ -188,3 +188,30 @@ git init
 git add .
 git commit -m "Implemented logic to issuing books to members, and made the program more user-friendly. Having trouble reading from .csv file"
 git push origin master
+ls
+git init
+cd Project
+ls
+emacs cw.cpp
+emacs cw.cpp
+cd ..
+ls
+git init
+git add .
+git commit -m "FINALLY made software read properly from any .CSV file (with similar format). It also displays the first 20 books when first opening the file"
+git push origin master
+cd Project
+kls
+ls
+emacs cw.cpp
+cd ..
+ls
+git init
+git add .
+git commit -m "re-worked third option, displays all books within 300 (cannot go over 300), from any .CSV file. Organised code and added changes"
+git push origin mater
+git push origin master
+ls
+cd Project
+ls
+ls
