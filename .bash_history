@@ -215,3 +215,56 @@ ls
 cd Project
 ls
 ls
+git init
+ls
+cd Project
+ls
+emacs cw.cpp
+cd ..
+git init
+git add .
+git commit -m "added error messages to opening .CSV, and it displays up to 300 books, if the file is opened successfully. Also added logic to issuing books and returning them (still working on it)
+
+
+clear
+"
+git push origin master
+cd Project
+ls
+emacs cw.cpp
+emacs cw.cpp
+emacs cw.cpp
+cd ..
+git init
+git add .
+git commit -m "debugged & fixed errors, improved usability and readability. Finished working on issuing books. Almost finished on returning and calculating fines for each member. (This is more of a simulator, but real numbers can be used as well, as long as code is changed)"
+git push origin master
+ls
+cd Project
+ls
+emacs cw.cpp
+g++ cw.cpp
+ls
+a.exe
+g++ -o cw.cpp
+ls
+./cw.cpp
+ls
+rm a.exe
+ls
+git init
+emacs cw.cpp
+git add .
+git commit -m "Implemented all the changes, just having trouble with the time simulation."
+git push origin master
+git pull origin master
+cd ..
+git init
+git init
+git add .
+git commit -m "Implemented all changes necessary. Having trouble with the time simulation."
+git push origin master
+git push origin master
+ls
+cd Project
+ls
