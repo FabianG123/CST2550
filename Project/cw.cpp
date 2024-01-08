@@ -96,6 +96,7 @@ public:
   std::string email;
   int bookID;
   int borrowedBookID; // Store the ID of the borrowed book
+  std::chrono::system_clock::time_point issueTimestamp; // Store issue timestamp
 
   // Constructor for manual creation
   Member(const std::string &_name, const std::string &_address,
@@ -164,6 +165,7 @@ void Librarian::addMember(Member &member) {
   std::cout << "Email: ";
   std::cin >> member.email;
   members.push_back(member);
+  std::cout << "\n-------------------------\n";
   std::cout << "Member added:\n";
   displayMemberDetails(&member); // Pass the address of the member
 }
@@ -180,12 +182,10 @@ Member *Librarian::findMemberByID(int memberID) {
 
 // Implementing member functions of Librarian and Member classes
 void Librarian::issueBook(Member *member, int bookID) {
-  // Implementation to issue a book to an individual member
   if (member != nullptr) {
     // Set the issue timestamp to the current time
-    issueTimestamp = std::chrono::system_clock::now();
+    member->issueTimestamp = std::chrono::system_clock::now();
     std::cout << "Book issued to " << member->name;
-    // Set the book as borrowed by the member
     member->setBooksBorrowed(bookID);
   } else {
     std::cout << "Invalid member.\n";
@@ -195,6 +195,12 @@ void Librarian::issueBook(Member *member, int bookID) {
 void Librarian::returnBook(Member *member, int bookID) {
   // Implementation to return a book from an individual member
   if (member != nullptr) {
+    // Check if the member has borrowed the specified book
+    if (member->bookID != bookID) {
+      std::cout << "Invalid book ID. The member has not borrowed this book.\n";
+      return;
+    }
+
     // Get the current time
     auto returnTimestamp = std::chrono::system_clock::now();
     // Calculate the difference in seconds between issue and return timestamps
@@ -202,8 +208,6 @@ void Librarian::returnBook(Member *member, int bookID) {
         returnTimestamp - issueTimestamp);
 
     // Simulated 3 days as 180 seconds for testing
-
-    // Value changes based on simulation, going to use 3 minutes as 3 days
     if (timeDifference.count() >= 180) {
       // Book returned after 3 days, implement fine calculation here
       std::cout << "Book returned after 3 days. Fine calculated.\n";
@@ -251,12 +255,13 @@ void Librarian::calcFine(const Member *member) {
 // Helper function to display member details
 void Librarian::displayMemberDetails(const Member *member) const {
   if (member != nullptr) {
-    std::cout << "Member ID: " << member->getMemberID() << "\n";
+    std::cout << "Member ID: " << member->getMemberID();
+    std::cout << "\n-------------------------\n\n\n";
     std::cout << "\n-------------------------\n";
     std::cout << "Name: " << member->name << "\n";
     std::cout << "Address: " << member->address << "\n";
     std::cout << "Email: " << member->email << "\n";
-    std::cout << "-------------------------\n";
+    std::cout << "-------------------------\n\n";
   } else {
     std::cout << "Invalid member.\n";
   }
@@ -265,7 +270,7 @@ void Librarian::displayMemberDetails(const Member *member) const {
 void Member::setBooksBorrowed(int _bookID) {
   // Implementation to set books borrowed by a member
   bookID = _bookID;
-  std::cout << " .Book borrowed by member.\n";
+  std::cout << ". Book borrowed by member.\n";
 }
 
 void Member::displayDetails() const {
@@ -330,6 +335,16 @@ bool readBooksFromCSV(const std::string &filename, Book books[], int &numBooks,
     std::cout << "Error opening file: " << filename << std::endl;
     return false;
   }
+}
+
+// Function to get the book name based on book ID
+std::string getBookNameByID(int bookID, const Book books[], int numBooks) {
+  for (int i = 0; i < numBooks; ++i) {
+    if (books[i].getBookID() == bookID) {
+      return books[i].getBookName();
+    }
+  }
+  return ""; // Return an empty string if book ID is not found
 }
 
 int main() {
@@ -409,14 +424,13 @@ int main() {
           if (existingMember != nullptr) {
             int memberChoice;
             do {
-              std::cout << "\nMember Menu\n";
+              std::cout << "\nMember Menu [" << existingMember->name << "]\n";
               std::cout << "1. Issue Book\n";
               std::cout << "2. Return Book\n";
               std::cout << "3. Display Borrowed Books\n";
-              std::cout << "4. Calculate Fine\n";
-              std::cout << "5. Display Member Details\n";
-              std::cout << "6. Back\n";
-              std::cout << "Enter your choice (1-6): ";
+              std::cout << "4. Display Member Details\n";
+              std::cout << "5. Back\n";
+              std::cout << "Enter your choice (1-5): ";
 
               if (std::cin >> memberChoice) {
                 switch (memberChoice) {
@@ -425,14 +439,18 @@ int main() {
                   std::cout << "Enter Book ID to issue: ";
                   std::cin >> bookIDToIssue;
 
-                  if (readBooksFromCSV(filename, books, numBooks, MAX_BOOKS)) {
+                  std::string bookName =
+                      getBookNameByID(bookIDToIssue, books, numBooks);
+                  if (!bookName.empty()) {
                     librarian.issueBook(existingMember, bookIDToIssue);
 
                     // Display details after issuing the book
-                    std::cout << "\nThank you for borrowing a book!\n";
+                    std::cout
+                        << "\nThank you for borrowing the book: " << bookName
+                        << "\n";
                   } else {
-                    std::cout << "Error: Unable to open the CSV file. Book "
-                                 "issuance failed.\n";
+                    std::cout
+                        << "Error: Book not found. Book issuance failed.\n";
                   }
                 } break;
 
@@ -442,6 +460,7 @@ int main() {
                   std::cin >> bookIDToReturn;
 
                   librarian.returnBook(existingMember, bookIDToReturn);
+                  librarian.calcFine(existingMember);
 
                   // Display details after returning the book
                   std::cout << "\nThank you for returning the book!\n";
@@ -452,20 +471,16 @@ int main() {
                   break;
 
                 case 4:
-                  librarian.calcFine(existingMember);
-                  break;
-
-                case 5:
                   librarian.displayMemberDetails(existingMember);
                   break;
 
-                case 6:
+                case 5:
                   std::cout << "Returning to the main menu.\n";
                   break;
 
                 default:
                   std::cout << "Invalid choice. Please enter a number between "
-                               "1 and 6.\n";
+                               "1 and 5.\n";
                   break;
                 }
               } else {
@@ -473,10 +488,10 @@ int main() {
                 std::cin.ignore(std::numeric_limits<std::streamsize>::max(),
                                 '\n');
                 std::cout << "Invalid input. Please enter a number between 1 "
-                             "and 6.\n";
+                             "and 5.\n";
               }
 
-            } while (memberChoice != 6);
+            } while (memberChoice != 5);
           } else {
             std::cout << "Member not found.\n";
           }
