@@ -35,10 +35,10 @@ private:
   int staffID;
   int salary;
   std::vector<Member> members;
-  std::string username; // Added username
-  std::string password; // Added password
-
+  std::string username;                                 // Added username
+  std::string password;                                 // Added password
   std::chrono::system_clock::time_point issueTimestamp; // Added timestamp
+
 public:
   // Additional attributes
   std::string name;
@@ -58,7 +58,6 @@ public:
   void issueBook(Member *member, int bookID);
   void returnBook(Member *member, int bookID);
   void displayBorrowedBooks(const Member *member);
-  void calcFine(const Member *member);
   void displayMemberDetails(const Member *member) const;
 
   // Function to add a member to the vector
@@ -88,6 +87,7 @@ private:
   static int
       lastAssignedID; // Static variable to keep track of the last assigned ID
   int memberID;
+  std::chrono::system_clock::time_point lastIssueTimestamp; // Added timestamp
 
 public:
   // Additional attributes
@@ -112,6 +112,10 @@ public:
 
   void setBooksBorrowed(int _bookID);
   void displayDetails() const;
+
+  void setLastIssueTimestamp() {
+    lastIssueTimestamp = std::chrono::system_clock::now();
+  }
 
 private:
   // Function to generate a random ID
@@ -180,11 +184,10 @@ Member *Librarian::findMemberByID(int memberID) {
   return nullptr; // Member not found
 }
 
-// Implementing member functions of Librarian and Member classes
 void Librarian::issueBook(Member *member, int bookID) {
   if (member != nullptr) {
-    // Set the issue timestamp to the current time
-    member->issueTimestamp = std::chrono::system_clock::now();
+    // Set the issue timestamp using the new function
+    member->setLastIssueTimestamp();
     std::cout << "Book issued to " << member->name;
     member->setBooksBorrowed(bookID);
   } else {
@@ -207,10 +210,14 @@ void Librarian::returnBook(Member *member, int bookID) {
     auto timeDifference = std::chrono::duration_cast<std::chrono::seconds>(
         returnTimestamp - issueTimestamp);
 
-    // Simulated 3 days as 180 seconds for testing
-    if (timeDifference.count() >= 180) {
-      // Book returned after 3 days, implement fine calculation here
-      std::cout << "Book returned after 3 days. Fine calculated.\n";
+    // Simulated 1 day as 60 seconds for testing
+    if (timeDifference.count() >= 60) {
+      // Calculate the fine
+      int fineDays =
+          (timeDifference.count() / 60) - 3; // 60 seconds in a minute
+      int fineAmount = fineDays * 1;         // £1 per day
+      std::cout << "Book returned after " << fineDays + 3 << " days. Fine: £"
+                << fineAmount << "\n";
     } else {
       std::cout << "Book returned within 3 days. No fine.\n";
     }
@@ -220,7 +227,7 @@ void Librarian::returnBook(Member *member, int bookID) {
               << " seconds\n";
 
     member->setBooksBorrowed(0);
-    std::cout << "Book returned by member.\n";
+    std::cout << "Book returned by " << member->name << "\n";
   } else {
     std::cout << "Invalid member.\n";
   }
@@ -229,7 +236,7 @@ void Librarian::returnBook(Member *member, int bookID) {
 void Librarian::displayBorrowedBooks(const Member *member) {
   // Implementation to display all books borrowed by an individual member
   if (member != nullptr) {
-    std::cout << "Displaying books borrowed by member:\n";
+    std::cout << "Displaying books borrowed by " << member->name << ":\n";
     if (member->bookID != 0) {
       // Assuming book details can be retrieved by bookID
       std::cout << "Book ID: " << member->bookID << "\n";
@@ -237,16 +244,6 @@ void Librarian::displayBorrowedBooks(const Member *member) {
     } else {
       std::cout << "No books borrowed by the member.\n";
     }
-  } else {
-    std::cout << "Invalid member.\n";
-  }
-}
-
-void Librarian::calcFine(const Member *member) {
-  // Implementation to calculate a fine for an individual member
-  // For simplicity, fine calculation is not implemented here
-  if (member != nullptr) {
-    std::cout << "Fine calculated for member.\n";
   } else {
     std::cout << "Invalid member.\n";
   }
@@ -270,7 +267,6 @@ void Librarian::displayMemberDetails(const Member *member) const {
 void Member::setBooksBorrowed(int _bookID) {
   // Implementation to set books borrowed by a member
   bookID = _bookID;
-  std::cout << ". Book borrowed by member.\n";
 }
 
 void Member::displayDetails() const {
@@ -460,10 +456,6 @@ int main() {
                   std::cin >> bookIDToReturn;
 
                   librarian.returnBook(existingMember, bookIDToReturn);
-                  librarian.calcFine(existingMember);
-
-                  // Display details after returning the book
-                  std::cout << "\nThank you for returning the book!\n";
                   break;
 
                 case 3:
