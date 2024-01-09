@@ -268,3 +268,17 @@ git push origin master
 ls
 cd Project
 ls
+ls
+git init
+cd Project
+ls
+emacs cw.cpp
+emacs cw.cpp
+cd ..
+git init
+ls
+git add .
+git commit -m "configured software and modified menu. implemented fine system when user returns a book."
+git push origin master
+git add .
+git commit -m "configured software and modified menu. implemented fine system when user returns a book."
