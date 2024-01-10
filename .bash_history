@@ -1,205 +1,3 @@
-ls
-git init
-pwd
-emacs cw.cpp
-git branch
-git pull origin main
-git pull origin CST2550
-setup-x86_64 -q -P git
-git init
-git add cw.cpp
-git commit -m "initial commit"
-git commit -a 
-git push origin master
-git branch
-git checkout -b master
-git add .
-git commit -m "trying to commit"
-git push origin master
-git remote -v
-git remote set-url origin https://github.com/FabianG123/CST2550.git
-git push origin master
-git fetch origin
-gt merge origin/master
-git merge origin/master
-emacs a.exe
-git add .
-git commit -m "trying to commit"
-git push origin master
-pwd
-mkdir Project
-git add .
-got commit -m "added a new folder 'Project'"
-got commit -m "added a new folder"
-git commit -m "added a new folder 'Project'"
-git push origin master
-git pull origin master
-git add . 
-git commit -m
-git commit
-git push origin master
-git add .
-git commit
-git commit -m "testing"
-git push origin master
-touch Project/.gitkeep
-git add .
-git commit -m "adding a new folder"
-git push origin master
-mv cw.cpp Project/
-git add .
-git commit -m "Moved cw.cpp to Project Folder"
-git push origin master
-git pull origin master
-git merge origin/master
-git pull origin master
-git add .
-git commit -m "resolved conflicts after pulling changes"
-ls
-cd Project
-ls
-cd ..
-git add Project
-git commit -m "Added the folder with the code"
-git push origin master
-git init
-ls
-cd Project
-emacs cw.cpp
-git branch progress-update
-git checkout progress-update
-git add cw.cpp
-git commit -m "Updated code with progress on class"
-git push origin progress-update
-cw.cpp
-emacs cw.cpp
-emacs cw.cpp
-git init
-cd ..
-git init
-git add .
-git commit -m "fixed classes and implemented library books"
-git push origin master
-git pull origin master
-git switch master
-git add .
-git commit -m "fixed classes and implemented library books"
-git push origin master
-git pull origin master
-git push origin master
-cd Project
-ls
-cw.cpp
-emacs cw.cpp
-cd ..
-ls
-cd Project
-ls
-emacs cw.cpp
-ls
-cd ..
-ls
-git add .
-git commit -m "fixed classes and implemented library books"
-git push origin master
-emacs cw.cpp
-rm cw.cpp
-ls
-cd Project
-emacs cw.cpp
-emacs cw.cpp
-cd ..
-git init
-git add .
-git commit -m "Configured the Member and Librarian classes"
-git push origin master
-cd Project
-emacs cw.cpp
-g++ cw.cpp
-emacs cw.cpp
-emacs cw.cpp
-git init
-ls
-cd Project
-lw
-ls
-emacs cw.cpp
-emacs cw.cpp
-g++ cw.cpp
-ls
-rm a.exe
-ls
-cd ..
-git init
-git add .
-git commit -m "added software menu, with validation. Program doesnt get stuck in an input error loop anymore"
-git push origin mater
-git push origin master
-cd Project
-ls
-emacs cw.cpp
-g++ cw.cpp
-ls
-rm a.exe
-ls
-cd ..
-git init
-git add .
-git commit -m "Re-worked the software menu, and added login for the librarian"
-git push origin master
-emacs cw.cpp
-ls
-cd Project
-ls
-emacs cw.coo
-ls
-emacs cw.cpp
-g++ cw.cpp
-ls
-rm a.exe
-ls
-cd ..
-git init
-git add .
-git commit -m "made the software easier for user to use. It now tells librarian the first name of the member books are assigned to"
-git push origin mater
-git push origin master
-git push origin master
-ls
-cd Project
-emacs cw.cpp
-emacs cw.cpp
-g++ cw.cpp
-ls
-rm a.exe
-ls
-cd ..
-git init
-git add .
-git commit -m "software now implements the .csv file, added randomly generated member IDs when a new member is created."
-git push origin master
-cd Project
-ls
-emacs cw.cpp
-emacs cw.cpp
-cd ..
-ls
-git init
-git add .
-git commit -m "Implemented logic to issuing books to members, and made the program more user-friendly. Having trouble reading from .csv file"
-git push origin master
-ls
-git init
-cd Project
-ls
-emacs cw.cpp
-emacs cw.cpp
-cd ..
-ls
-git init
-git add .
-git commit -m "FINALLY made software read properly from any .CSV file (with similar format). It also displays the first 20 books when first opening the file"
-git push origin master
 cd Project
 kls
 ls
@@ -410,3 +208,293 @@ git init
 git add .
 git commit -m "added the executable file and tried creating makefile"
 git push origin master
+ls
+cd Project
+ls
+ls
+emacs cw.cpp
+/cw.exe
+./cw.exe
+ls
+ce.cpp
+emacs cw.cpp
+g++ cw.cpp -o cw.exe
+ls
+./cw.exe
+ls
+./cw.exe
+ls
+emacs cw_tests.cpp
+ls
+./cw_tests
+g++ -std=c++11 -o test_cw cw_tests.cpp cw.cpp -Wall -Wextra -I. -lpthread
+ls
+rm cw_tests.cpp
+ls
+emcas library_books.csv
+emacs cw_tests.cpp
+ls
+./cw.exe
+ls
+emcas makefile
+emacs makefile
+ls
+emacs person.h
+emacs person.cpp
+ls
+emacs person.cpp
+emacs person.h
+ls
+emacs librarian.h
+emacs librarian.cpp
+ls
+emacs person.h
+emacs member.h
+emacs member.cpp
+ls
+emacs book.h
+emacs book.h
+emacs book.cpp
+ls
+emacs main.cpp
+ls
+emacs main.cpp
+emacs functions.h
+emacs functions.cpp
+ls
+emacs makefile
+ls
+emacs Makefile
+ls
+make
+ls
+emacs librarian.cpp
+emacs librarian.cpp
+emacs librarian.cpp
+emacs peron.h
+ls
+emacs person.h
+emcas librarian.h
+emacs librarian.h
+emacs librarian.h
+emacs member.h
+emacs book.h
+emacs functions.h
+emacs librarian.cpp
+emacs functions.cpp
+ls
+make clean
+make
+emacs member.cpp
+make
+emacs Makefile
+make
+emacs functions.h
+emacs functions.cpp
+make
+emacs functions.cpp
+ls
+make
+emacs functions.cpp
+make
+emacs book.cpp
+emacs book.h
+ls
+$ ls
+'#librarian.cpp#'   catch.hpp       functions.cpp~   librarian.h         main.cpp~     member.o
+ Makefile           cw.cpp          functions.h      librarian.h~        member.cpp    person.cpp
+ book.cpp           cw.exe          functions.h~     librarian.o         member.cpp~   person.h
+ book.h             cw_tests.cpp    librarian.cpp    library_books.csv   member.h
+ book.o             functions.cpp   librarian.cpp~   main.cpp            member.h~
+emacs librarian.h
+emacs member.h
+emacs book.h
+emacs functions.h
+emacs librarian.cpp
+emacs member.cpp
+emacs book.cpp
+emacs functions.cpp
+make
+emacs librarian.h
+emacs librarian.cpp
+make
+emacs member.h
+emacs member.cpp
+make
+emacs member.h
+make
+emacs functions.cpp
+emacs book.h
+emacs book.cpp
+make
+make clean
+emacs functions.cpp
+make
+emacs Makefile
+make
+emacs librarian.h
+make
+emacs librarian.h
+make
+emacs librarian.h
+make
+emacs librarian.h
+emacs member.h
+emacs librarian.h
+make
+emacs member.h
+make
+emacs member.cpp
+make
+emacs member.cpp
+make
+emacs member.cpp
+make
+emacs member.cpp
+make
+emacs member.h
+emacs member.cpp
+make
+emacs member.cpp
+make
+ls
+emacs member.h
+make
+ls
+emacs main.cpp
+make
+emacs main.cpp
+ls
+emacs main.cpp
+make
+emacs functions.h
+emacs functions.cpp
+emacs main.cpp
+make
+emacs librarian.h
+emacs librarian.cpp
+emacs librarian.cpp
+make
+emacs member.h
+emacs member.cpp#
+ls
+rm member.cpp
+rm member.cpp#
+emacs member.cpp
+make
+emacs Makefile
+emacs Makefile
+emacs librarian.cpp
+make
+emacs librarian.cpp
+make
+emacs librarian.cpp
+make
+emacs librarian.cpp
+make
+emacs librarian.cpp
+make
+emacs member.h
+make
+emacs librarian.cpp
+emacs librarian.h
+make
+emacs librarian.h
+emacs librarian.cpp
+emacs librarian.h
+make
+make clean
+ls
+emacs cw_tests.cpp
+emacs cw_tests.cpp
+./cw_tests.cpp
+make
+g++ -o tests.cpp cw.cpp -std=c++11
+./tests
+ls
+./tests.cpp
+ls
+g++ -o tests cw.cpp -I./ -std=c++11
+./tests
+ls
+./cw.exe
+ls
+rm tests.exe
+rm tests.cpp
+ls
+emacs cw_tests.cpp
+g++ -o tests -std=c++11 -I/ cw.cpp cw_tests.cpp
+emacs cw_tests.cpp
+ls 
+g++ -o tests -std=c++11 -I/ cw.cpp cw_tests.cpp
+ls 
+emacs cw_tests.cpp
+g++ -o my_program cw.cpp test_cw.cpp -std=c++11
+ls
+g++ -o my_program cw.cpp cw_tests.cpp -std=c++11
+ls
+rm cw_tests.cpp
+rm cw_tests.cpp~
+ls
+ls 
+emacs Person.h
+emacs Book.h
+emacs Member.h
+emacs Librarian.h
+ls
+emacs LibraryFunctions.h
+emacs Person.cpp
+emacs Book.h
+emacs Book.cpp
+emacs Book.cpp
+emacs Book.cpp
+emacs Person.cpp
+ls
+emacs Member.cpp
+emacs Person.cpp
+emacs Book.cpp
+emacs Member.h
+emacs Member.cpp
+ls
+emacs Librarian.cpp
+emacs Librarian.h
+ls
+emacs LibraryFunctions.cpp
+ls
+emacs Member.cpp
+emacs LibraryFunctions.cpp
+emacs main.cpp
+ls
+emacs Makefile
+ls
+emacs Makefile
+make
+emacs LibraryFunctions.h
+emacs LibraryFunctions.cpp
+emacs LibraryFunctions.h
+make
+emacs LibraryFunctions.cpp
+make
+make
+emacs Librarian.cpp
+emacs Librarian.h
+emacs Librarian.cpp
+make
+ls
+emacs Makefile
+./program
+make clean
+git add .
+git commit -m "Added the makefile, and divided the classes, main, and methods into different headers and cpp files."
+git push origin master
+git pull origin master
+cd ..
+git init
+git add .
+git commit -m "Added the makefile, and divided the classes, main, and methods into different headers and cpp files."
+git push origin master
+git push origin master
+ls
+cd Project
+ls
+emacs Makefile
