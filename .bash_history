@@ -387,3 +387,26 @@ emacs cw.cpp
 g++ cw.cpp
 g++ cw.cpp -o cw.exe
 ls
+ls
+cd Project
+ls
+g++ cw.cpp
+emacs cw.cpp
+g++ cw.cpp
+ls
+ls
+rm a.exe
+ls
+g++ cw.cpp -o cw.exe
+ls
+cw.exe
+./cw.exe
+cw.exe
+ls
+cd ..
+ls
+git add .
+git init
+git add .
+git commit -m "added the executable file and tried creating makefile"
+git push origin master

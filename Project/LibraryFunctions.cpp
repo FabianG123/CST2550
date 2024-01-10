@@ -1,0 +1,69 @@
+// LibraryFunctions.cpp
+#include "LibraryFunctions.h"
+#include "Book.h"
+#include <fstream>
+#include <iostream>
+#include <sstream>
+
+// Function to read books from a CSV file
+bool readBooksFromCSV(const std::string &filename, Book books[], int &numBooks,
+                      const int MAX_BOOKS) {
+  std::ifstream file(filename);
+  if (file.is_open()) {
+    int count = 0; // Variable to count the number of books read
+    std::string line;
+
+    // Discard the header line
+    std::getline(file, line);
+
+    while (file.good() && numBooks < MAX_BOOKS && count < 300 &&
+           std::getline(file, line)) {
+      std::stringstream ss(line);
+
+      int bookID;
+      std::string bookName;
+      int pageCount;
+      std::string authorFirstName;
+      std::string authorLastName;
+      std::string bookType;
+
+      char comma; // to read and discard the commas
+      ss >> bookID >> comma;
+
+      // Use std::getline to read strings with spaces
+      std::getline(ss, bookName, ',');
+      ss >> pageCount >> comma;
+      std::getline(ss, authorFirstName, ',');
+      std::getline(ss, authorLastName, ',');
+      std::getline(ss, bookType, ',');
+
+      // Debug output
+      std::cout << "Read from file: " << bookID << ", " << bookName << ", "
+                << pageCount << ", " << authorFirstName << ", "
+                << authorLastName << ", " << bookType << std::endl;
+
+      // Create Book object and store it in the array
+      books[numBooks++] = {bookID,          bookName,       pageCount,
+                           authorFirstName, authorLastName, bookType};
+
+      count++;
+    }
+    file.close();
+    std::cout << "File successfully opened: " << filename << std::endl;
+    return true;
+  } else {
+    std::cout << "Error opening file: " << filename << std::endl;
+    return false;
+  }
+}
+
+
+// Function to get the book name based on book ID
+std::string getBookNameByID(int bookID, const Book books[], int numBooks) {
+  for (int i = 0; i < numBooks; ++i) {
+    if (books[i].getBookID() == bookID) {
+      return books[i].getBookName();
+    }
+  }
+  return ""; // Return an empty string if book ID is not found
+}

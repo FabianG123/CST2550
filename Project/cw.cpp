@@ -354,7 +354,7 @@ int main() {
   int numBooks = 0;
 
   std::string filename;
-  std::cout << "Enter the filename: ";
+  std::cout << "Enter the filename. Make sure it is saved in the same folder as this program: ";
   std::cin >> filename;
 
   // Check if the filename is valid
