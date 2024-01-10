@@ -282,3 +282,108 @@ git commit -m "configured software and modified menu. implemented fine system wh
 git push origin master
 git add .
 git commit -m "configured software and modified menu. implemented fine system when user returns a book."
+ls
+cd Project
+cd..
+cd ..
+git add . 
+git commit 
+git commit "testing"
+git commit -m "testing"
+git push origin master
+git pull origin master
+git pull origin master --no-rebase
+git pull origin master --rebase
+git pull origin master
+git add . 
+git commit -m "testing"
+git push origin master
+cd Project
+ls
+rm cw.cpp~
+ls
+emacs makefile
+ls
+make cw
+ls
+rm cw.exe
+ls
+emacs test_cw.cpp
+ls
+emacs makefile
+make cw
+make test
+make clean
+ls
+rm makefile~
+ls
+emacs test_cw.cpp
+rm text_cw.cpp
+rm test_cw.cpp
+ls
+emacs test_cw.cpp
+ls
+emacs makefile
+make test#
+make test
+ls
+ls
+ls
+emacs test_cw.cpp
+ls
+ls test_cw.cpp
+ls
+emacs test_cw.cpp
+emacs makefile
+make
+emacs makefile
+make
+make test
+ls
+rm makefile~
+ls
+rm catch.hpp
+ls
+rm cw.exe
+ls
+ls
+make
+get test
+make test
+make
+ls
+emacs cw.cpp
+ls
+test_cw.cpp
+emacs test_cw.cpp
+emacs makefile
+ls
+make
+emacs makefile
+ls
+make
+ls
+g++ cw.cpp -o cw.exe
+ls
+rm makefile~
+ls
+rm test_cw.cpp~
+ls
+g++ cw.cpp
+ls
+rm catch.hpp
+rm makefile
+rm test_cw.cpp
+ls
+cd ..
+ls
+cd Project
+emacs cw.cpp
+g++ cw.cpp
+ls
+cd Project
+ls
+emacs cw.cpp
+g++ cw.cpp
+g++ cw.cpp -o cw.exe
+ls
